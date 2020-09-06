@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row h-100 my-auto justify-content-center align-items-center text-center">
+
+    <form action="/restaurants/{{ restaurant._id }}/edit" method="POST">
+
+      <input type="text" placeholder="中文名稱" name="name" value="{{ restaurant.name }}" class="mb-2 form-control">
+      <input type="text" placeholder="name in English" name="name_en" value="{{ restaurant.name_en }}"
+        class="mb-2 form-control">
+      <input type="text" placeholder="category" name="category" value="{{ restaurant.category }}"
+        class="mb-2 form-control">
+      <input type="text" placeholder="image" name="image" value="{{ restaurant.image }}" class="mb-2 form-control">
+      <input type="text" placeholder="location" name="location" value="{{ restaurant.location }}"
+        class="mb-2 form-control">
+      <input type="text" placeholder="phone" name="phone" class="mb-2 value=" {{ restaurant.phone }}" form-control">
+      <input type="text" placeholder="google_map" name="google_map" value="{{ restaurant.google_map }}"
+        class="mb-2 form-control">
+      <input type="text" placeholder="rating" name="rating" value="{{ restaurant.rating }}" class="mb-2 form-control">
+      <input type="text" placeholder="description" name="description" value="{{ restaurant.description }}"
+        class="mb-2 form-control">
+
+      <div class="d-flex flex-row bd-highlight mb-3 justify-content-center align-items-center">
+        <div class="btn-save mr-3">
+          <button type="submit" class="btn btn-outline-info btn-sm">Save</button>
+        </div>
+        <div class="back-link">
+          <a href="/" style="color: #0088A8;">back</a>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+</div>
