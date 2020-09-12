@@ -1,16 +1,16 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+
 const restaurantList = require('./restaurant.json')
-
+const Restaurant = require('./models/restaurant.js')
+const mongoose = require('mongoose')
 const app = express()
+mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true }, { useUnifiedTopology: true })
 const port = 3000
+let lastId = 8
 
-const Restaurant = require('./models/restaurant') //載入Restaurant model
-
-mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true })
-
+// setting connection
 const db = mongoose.connection
 
 db.on('error', () => {
@@ -25,64 +25,91 @@ db.once('open', () => {
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-app.use(bodyParser.urlencoded({ extended: true }))
-
 // setting static files
 app.use(express.static('public'))
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // routes setting
 app.get('/', (req, res) => {
   Restaurant.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.log(error))
+    .catch(error => console.error(error))
 })
 
+// add new restaurant
 app.get('/restaurants/new', (req, res) => {
   return res.render('new')
 })
 
-// Create newone
 app.post('/restaurants', (req, res) => {
+  lastId++
+  const id = lastId
   const name = req.body.name
-  return Restaurant.create({ name })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(console.log(error)))
+  const name_en = req.body.name_en
+  const category = req.body.category
+  const image = req.body.image
+  const location = req.body.location
+  const phone = req.body.phone
+  const rating = req.body.rating
+  const google_map = req.body.google_map
+  const description = req.body.description
+
+  return Restaurant.create({ id, name, name_en, category, image, location, phone, google_map, rating, description })
+    .then(() => { res.redirect('/') })
+    .catch(error => console.log(error))
 })
 
-// Read one
+// view restaurant
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
-    .then((restaurant) => res.render('show', { restaurant }))
-    .catch(error => console.log(console.log(error)))
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(error => console.log(error))
 })
 
-// Update one
+// edit restaurant
 app.get('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
-    .then((restaurant) => res.render('edit', { restaurant }))
-    .catch(error => console.log(console.log(error)))
+    .then(restaurant => res.render('edit', { restaurant }))
+    .catch(error => console.log(error))
 })
-
 
 app.post('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
   const name = req.body.name
+  const name_en = req.body.name_en
+  const category = req.body.category
+  const image = req.body.image
+  const location = req.body.location
+  const phone = req.body.phone
+  const rating = req.body.rating
+  const google_map = req.body.google_map
+  const description = req.body.description
+
   return Restaurant.findById(id)
     .then(restaurant => {
-      restaurant = Object.assign(restaurant, req.body)
+      restaurant.id = id
+      restaurant.name = name
+      restaurant.name_en = name_en
+      restaurant.category = category
+      restaurant.image = image
+      restaurant.location = location
+      restaurant.phone = phone
+      restaurant.rating = rating
+      restaurant.google_map = google_map
+      restaurant.description = description
       return restaurant.save()
     })
     .then(() => res.redirect(`/restaurants/${id}`))
     .catch(error => console.log(error))
 })
 
-
-// Delete one
+// delete restaurant
 app.post('/restaurants/:id/delete', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)

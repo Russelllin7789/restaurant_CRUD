@@ -1,20 +1,15 @@
-<div class="container">
-  <div class="row h-100 my-auto justify-content-center align-items-center text-center">
+<form action="/restaurants" method="POST">
+  <div class="container">
+    <input type="string" placeholder="輸入餐廳名稱" name="name">
+    <input type="string" placeholder="輸入餐廳英文名稱" name="name_en">
 
-    <form action="/restaurants" method="POST">
-
-      <input type="text" placeholder="中文名稱" name="name" class="mb-2 form-control">
-      <input type="text" placeholder="name in English" name="name_en" class="mb-2 form-control">
-      <input type="text" placeholder="category" name="category" class="mb-2 form-control">
-      <input type="text" placeholder="image" name="image" class="mb-2 form-control">
-      <input type="text" placeholder="location" name="location" class="mb-2 form-control">
-      <input type="text" placeholder="phone" name="phone" class="mb-2 form-control">
-      <input type="text" placeholder="google_map" name="google_map" class="mb-2 form-control">
-      <input type="text" placeholder="rating" name="rating" class="mb-2 form-control">
-      <input type="text" placeholder="description" name="description" class="mb-2 form-control">
-
-      <button type="submit" class="btn btn-outline-secondary">Create</button>
-    </form>
-
+    <input type="string" placeholder="輸入餐廳類別" name="category">
+    <input type="string" placeholder="上傳餐廳圖片" name="image">
+    <input type="string" placeholder="輸入餐廳地點" name="location">
+    <input type="string" placeholder="輸入餐廳電話" name="phone">
+    <input type="string" placeholder="輸入餐廳Google map" name="google_map">
+    <input type="number" placeholder="輸入餐廳評等" name="rating">
+    <input type="string" placeholder="輸入餐廳描述" name="description">
+    <button type="submit">Create</button>
   </div>
-</div>
+</form>

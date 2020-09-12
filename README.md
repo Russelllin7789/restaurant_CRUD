@@ -1,4 +1,4 @@
-# Restaurant CRUD
+# Restaurant List
 A website of introducing tasty restaurants in Taipei!! 
 
 # Environment
@@ -9,15 +9,10 @@ A website of introducing tasty restaurants in Taipei!!
 
 # How to use
 ## 1. Clone this git to local
-git clone https://github.com/Russelllin7789/restaurant_CRUD.git
 ## 2. Get into the directory
-cd restaurant_CRUD
 ## 3. Install packages
-npm install
 ## 4. Run the project
-npm run dev
 
 # Features
 * Tasty restaurants will be listed and updated from time to time
 * Can easily search them via different keywords
-
